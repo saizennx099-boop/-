@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İyi ki Doğdun Meryem 🎀</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hk-pink:    #ff85b3;
+    --hk-rose:    #ff4d8d;
+    --hk-red:     #e8003d;
+    --hk-light:   #fff0f6;
+    --hk-cream:   #fff8fb;
+    --hk-bow:     #ff4d8d;
+    --hk-dark:    #5a0030;
+    --hk-yellow:  #ffe066;
+    --hk-sky:     #b3e5fc;
+    --hk-mint:    #b2f0e8;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--hk-cream);
+    font-family: 'Nunito', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ===== CANVAS ===== */
+  #fw-canvas {
+    position: fixed; top:0; left:0;
+    width:100%; height:100%;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ===== BG PATTERN ===== */
+  .bg-pattern {
+    position: fixed; top:0; left:0;
+    width:100%; height:100%;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(circle, rgba(255,133,179,0.12) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* ===== FLOATIES ===== */
+  .floaties {
+    position: fixed; top:0; left:0;
+    width:100%; height:100%;
+    pointer-events: none; z-index:1; overflow:hidden;
+  }
+  .floatie {
+    position:absolute;
+    animation: floatUp linear infinite;
+    opacity:0;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(110vh) rotate(0deg); opacity:1; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity:0; }
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative; z-index:2;
+    min-height: 100vh;
+    display: flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    text-align:center; padding:2rem;
+    background: linear-gradient(160deg, #ffe0ef 0%, #ffc2dd 40%, #ffaacf 100%);
+    overflow:hidden;
+  }
+
+  /* hero bow decorations */
+  .hero::before, .hero::after {
+    content:'';
+    position:absolute;
+    border-radius:50%;
+    background: rgba(255,77,141,0.15);
+  }
+  .hero::before { width:500px; height:500px; top:-200px; left:-200px; }
+  .hero::after  { width:400px; height:400px; bottom:-150px; right:-150px; }
+
+  /* ===== HELLO KITTY SVG ===== */
+  .hk-hero-wrap {
+    position:relative; z-index:3;
+    animation: hkBounce 2s ease-in-out infinite;
+    filter: drop-shadow(0 8px 24px rgba(255,77,141,0.35));
+    margin-bottom:1.5rem;
+  }
+  @keyframes hkBounce {
+    0%,100%{ transform:translateY(0) scale(1); }
+    50%    { transform:translateY(-16px) scale(1.04); }
+  }
+
+  .hero-date {
+    font-size:0.8rem; letter-spacing:5px; text-transform:uppercase;
+    color: var(--hk-red); font-weight:800;
+    margin-bottom:0.5rem;
+    opacity:0; animation: fadeUp 1s ease 0.3s forwards;
+  }
+  .hero-title {
+    font-family:'Dancing Script',cursive;
+    font-size: clamp(3rem,10vw,6.5rem);
+    color: var(--hk-dark);
+    line-height:1.1;
+    text-shadow: 3px 3px 0 rgba(255,77,141,0.25);
+    opacity:0; animation: fadeUp 1s ease 0.6s forwards;
+  }
+  .hero-title span {
+    background: linear-gradient(135deg, var(--hk-rose), var(--hk-red));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  }
+  .hero-subtitle {
+    font-size:clamp(0.95rem,2.5vw,1.2rem);
+    color: var(--hk-dark); opacity:0;
+    margin-top:0.8rem;
+    animation: fadeUp 1s ease 0.9s forwards;
+    font-weight:600;
+  }
+  .scroll-hint {
+    margin-top:2.5rem; font-size:0.75rem; letter-spacing:3px;
+    color: rgba(90,0,48,0.5); font-weight:700;
+    animation: blink 2s ease-in-out infinite, fadeUp 1s ease 2s forwards;
+    opacity:0;
+  }
+  @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes blink    { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+  /* ===== BOW DIVIDER ===== */
+  .bow-divider {
+    display:flex; align-items:center; justify-content:center;
+    gap:1rem; padding:1.5rem 0;
+    position:relative; z-index:2;
+  }
+  .bow-line { flex:1; height:2px; max-width:120px;
+    background:linear-gradient(90deg,transparent,var(--hk-pink)); }
+  .bow-line.r { background:linear-gradient(90deg,var(--hk-pink),transparent); }
+
+  /* ===== SECTIONS ===== */
+  section { position:relative; z-index:2; padding:4rem 2rem; }
+  .section-inner { max-width:860px; margin:0 auto; text-align:center; }
+  .section-title {
+    font-family:'Dancing Script',cursive;
+    font-size:clamp(2rem,6vw,3rem);
+    color: var(--hk-dark);
+    margin-bottom:2.5rem;
+    text-shadow: 2px 2px 0 rgba(255,77,141,0.2);
+  }
+
+  /* ===== WISH CARD ===== */
+  .wish-section { background: linear-gradient(180deg,#fff0f6,#ffe4f0); }
+
+  .wish-card {
+    background: #fff;
+    border: 3px solid var(--hk-pink);
+    border-radius: 32px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 8px 40px rgba(255,133,179,0.25), 8px 8px 0 var(--hk-pink);
+    position:relative; overflow:hidden;
+  }
+  .wish-card::after {
+    content:'🎀';
+    position:absolute; font-size:7rem;
+    bottom:-1rem; right:-0.5rem; opacity:0.07;
+  }
+  .wish-card h2 {
+    font-family:'Dancing Script',cursive;
+    font-size:clamp(1.8rem,5vw,3rem);
+    color:var(--hk-rose); margin-bottom:1.2rem;
+  }
+  .wish-card p {
+    font-size:clamp(0.95rem,2.5vw,1.1rem);
+    color:#5a0030; line-height:1.95; font-weight:600;
+  }
+
+  /* ===== COUNTDOWN ===== */
+  .countdown-section { background: linear-gradient(180deg,#ffe4f0,#ffcce5); }
+  .countdown-label {
+    font-family:'Dancing Script',cursive;
+    font-size:clamp(1.4rem,4vw,2.2rem);
+    color:var(--hk-dark); margin-bottom:2rem;
+  }
+  .countdown-grid { display:flex; gap:1.2rem; justify-content:center; flex-wrap:wrap; }
+  .countdown-box {
+    background:#fff;
+    border:3px solid var(--hk-pink);
+    border-radius:20px;
+    padding:1.4rem 1.8rem;
+    min-width:100px;
+    box-shadow: 4px 4px 0 var(--hk-pink);
+  }
+  .countdown-num {
+    font-size:2.8rem; font-weight:900; display:block;
+    color:var(--hk-rose); line-height:1;
+  }
+  .countdown-unit {
+    font-size:0.65rem; letter-spacing:3px; text-transform:uppercase;
+    color:var(--hk-dark); font-weight:800; margin-top:0.4rem; display:block;
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline-section { background: linear-gradient(180deg,#ffcce5,#fff0f6); }
+  .timeline { position:relative; padding:1rem 0; }
+  .timeline::before {
+    content:''; position:absolute; left:50%; top:0; bottom:0; width:3px;
+    background:linear-gradient(to bottom,transparent,var(--hk-pink),var(--hk-rose),transparent);
+    transform:translateX(-50%);
+  }
+  .tl-item {
+    display:flex; justify-content:flex-end;
+    padding-right:calc(50% + 2rem);
+    margin-bottom:2.5rem; position:relative;
+    opacity:0; transform:translateX(-30px); transition:all 0.7s ease;
+  }
+  .tl-item.right { justify-content:flex-start; padding-right:0; padding-left:calc(50% + 2rem); transform:translateX(30px); }
+  .tl-item.visible { opacity:1; transform:translateX(0); }
+  .tl-item::after {
+    content:'🎀'; position:absolute; left:50%; top:50%;
+    transform:translate(-50%,-50%); font-size:1.3rem; z-index:1;
+  }
+  .tl-card {
+    background:#fff; border:2px solid var(--hk-pink);
+    border-radius:18px; padding:1.2rem 1.4rem;
+    max-width:300px; text-align:left;
+    box-shadow:3px 3px 0 var(--hk-pink);
+  }
+  .tl-emoji { font-size:1.8rem; display:block; margin-bottom:0.3rem; }
+  .tl-title { font-weight:800; color:var(--hk-rose); font-size:0.85rem; letter-spacing:1px; }
+  .tl-text  { color:#5a0030; font-size:0.88rem; margin-top:0.3rem; line-height:1.6; font-weight:600; }
+
+  /* ===== WISHES GALLERY ===== */
+  .gallery-section { background: linear-gradient(180deg,#fff0f6,#ffcce5); }
+  .wishes-grid {
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:1.2rem; margin-top:1rem;
+  }
+  .wish-bubble {
+    background:#fff; border:2px solid var(--hk-pink);
+    border-radius:22px; padding:1.5rem;
+    text-align:center;
+    box-shadow:4px 4px 0 var(--hk-pink);
+    transition:transform 0.25s, box-shadow 0.25s;
+    cursor:default;
+  }
+  .wish-bubble:hover {
+    transform:translateY(-6px) scale(1.03);
+    box-shadow:6px 6px 0 var(--hk-rose);
+    border-color:var(--hk-rose);
+  }
+  .wish-bubble .icon { font-size:2.4rem; display:block; margin-bottom:0.7rem; }
+  .wish-bubble .wish-title { color:var(--hk-rose); font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; font-weight:800; margin-bottom:0.4rem; }
+  .wish-bubble .wish-text  { color:#5a0030; font-size:0.88rem; line-height:1.6; font-weight:600; }
+
+  /* ===== BUTTONS ===== */
+  .confetti-btn-section { background: linear-gradient(180deg,#ffcce5,#ffe4f0); padding-bottom:5rem; }
+
+  .big-btn {
+    background: linear-gradient(135deg,var(--hk-rose),var(--hk-red));
+    border:none; border-radius:60px;
+    padding:1.1rem 2.8rem;
+    font-family:'Nunito',sans-serif; font-size:1.2rem; font-weight:800;
+    color:#fff; cursor:pointer; letter-spacing:1px;
+    box-shadow:0 4px 20px rgba(232,0,61,0.3), 4px 4px 0 var(--hk-dark);
+    transition:transform 0.2s, box-shadow 0.2s;
+    position:relative; overflow:hidden;
+  }
+  .big-btn:hover { transform:translateY(-3px) scale(1.05); box-shadow:0 8px 30px rgba(232,0,61,0.4), 4px 4px 0 var(--hk-dark); }
+  .big-btn:active { transform:scale(0.97); }
+  .note-btn { background:linear-gradient(135deg,#ff85b3,var(--hk-rose)); }
+  .btn-note { margin-top:1rem; color:rgba(90,0,48,0.5); font-size:0.8rem; letter-spacing:2px; font-weight:700; }
+
+  /* ===== NOTE MODAL ===== */
+  #note-modal {
+    display:none; position:fixed; inset:0; z-index:999;
+    background:rgba(255,200,220,0.7); backdrop-filter:blur(10px);
+    align-items:center; justify-content:center;
+  }
+  .modal-box {
+    background:#fff; border:3px solid var(--hk-pink);
+    border-radius:28px; padding:2.5rem;
+    max-width:500px; width:90%; position:relative;
+    box-shadow:8px 8px 0 var(--hk-rose);
+  }
+  .modal-box h2 {
+    font-family:'Dancing Script',cursive; color:var(--hk-rose);
+    font-size:2rem; margin-bottom:0.4rem;
+  }
+  .modal-box p { color:#5a0030; font-size:0.85rem; margin-bottom:1rem; font-weight:600; }
+  #note-input {
+    width:100%; height:150px;
+    background:#fff0f6; border:2px solid var(--hk-pink);
+    border-radius:14px; padding:1rem; color:#5a0030;
+    font-family:'Nunito',sans-serif; font-size:1rem; font-weight:600;
+    resize:none; outline:none; line-height:1.7;
+  }
+  .modal-btns { display:flex; gap:0.8rem; margin-top:1rem; justify-content:flex-end; }
+  .modal-cancel {
+    background:#f0f0f0; border:2px solid #ddd; border-radius:30px;
+    padding:0.65rem 1.4rem; color:#888; cursor:pointer; font-size:0.9rem; font-weight:700;
+  }
+  .modal-save {
+    background:linear-gradient(135deg,var(--hk-rose),var(--hk-red));
+    border:none; border-radius:30px; padding:0.65rem 1.6rem;
+    color:#fff; cursor:pointer; font-size:0.9rem; font-weight:800;
+    box-shadow:3px 3px 0 var(--hk-dark);
+  }
+
+  /* ===== NOTE DISPLAY ===== */
+  #note-display {
+    display:none; position:relative; z-index:2;
+    padding:3rem 2rem; background:#fff0f6; text-align:center;
+    border-top:3px dashed var(--hk-pink);
+  }
+  #note-display h2 {
+    font-family:'Dancing Script',cursive; color:var(--hk-rose);
+    font-size:2rem; margin-bottom:1.2rem;
+  }
+  #note-text-display {
+    background:#fff; border:2px solid var(--hk-pink);
+    border-radius:20px; padding:2rem; max-width:600px; margin:0 auto;
+    color:#5a0030; font-size:1.05rem; font-weight:600;
+    line-height:1.9; white-space:pre-wrap;
+    box-shadow:4px 4px 0 var(--hk-pink);
+  }
+  .edit-note-btn {
+    margin-top:1rem; background:none;
+    border:2px solid var(--hk-pink); border-radius:30px;
+    padding:0.5rem 1.4rem; color:var(--hk-rose);
+    cursor:pointer; font-size:0.85rem; font-weight:800;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    position:relative; z-index:2; text-align:center;
+    padding:2.5rem;
+    background:#ffe4f0;
+    border-top:3px solid var(--hk-pink);
+  }
+  footer p {
+    font-family:'Dancing Script',cursive;
+    font-size:1.3rem; color:var(--hk-dark);
+  }
+  footer span { color:var(--hk-rose); }
+
+  /* ===== MOBILE ===== */
+  @media(max-width:600px){
+    .timeline::before { left:1rem; }
+    .tl-item, .tl-item.right { justify-content:flex-start; padding-left:3rem; padding-right:0; transform:translateX(20px); }
+    .tl-item::after { left:1rem; }
+    .countdown-box { min-width:75px; padding:1rem; }
+    .countdown-num { font-size:2rem; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="fw-canvas"></canvas>
+<div class="bg-pattern"></div>
+<div class="floaties" id="floaties"></div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <!-- Hello Kitty SVG -->
+  <div class="hk-hero-wrap">
+    <svg width="220" height="240" viewBox="0 0 220 240" xmlns="http://www.w3.org/2000/svg">
+      <!-- Body -->
+      <ellipse cx="110" cy="195" rx="62" ry="48" fill="#fff" stroke="#e8003d" stroke-width="2.5"/>
+      <!-- Dress dots -->
+      <circle cx="90"  cy="195" r="5" fill="#ff85b3"/>
+      <circle cx="110" cy="205" r="5" fill="#ff85b3"/>
+      <circle cx="130" cy="195" r="5" fill="#ff85b3"/>
+      <circle cx="100" cy="215" r="5" fill="#ff85b3"/>
+      <circle cx="120" cy="215" r="5" fill="#ff85b3"/>
+      <!-- Arms -->
+      <ellipse cx="51"  cy="190" rx="18" ry="11" fill="#fff" stroke="#e8003d" stroke-width="2" transform="rotate(-30 51 190)"/>
+      <ellipse cx="169" cy="190" rx="18" ry="11" fill="#fff" stroke="#e8003d" stroke-width="2" transform="rotate(30 169 190)"/>
+      <!-- Legs -->
+      <rect x="80"  y="235" width="22" height="18" rx="9" fill="#fff" stroke="#e8003d" stroke-width="2"/>
+      <rect x="118" y="235" width="22" height="18" rx="9" fill="#fff" stroke="#e8003d" stroke-width="2"/>
+      <!-- Shoes -->
+      <ellipse cx="91"  cy="254" rx="16" ry="8" fill="#e8003d"/>
+      <ellipse cx="129" cy="254" rx="16" ry="8" fill="#e8003d"/>
+      <!-- Head -->
+      <ellipse cx="110" cy="110" rx="75" ry="72" fill="#fff" stroke="#e8003d" stroke-width="3"/>
+      <!-- Ears -->
+      <ellipse cx="45"  cy="58" rx="22" ry="22" fill="#fff" stroke="#e8003d" stroke-width="3"/>
+      <ellipse cx="175" cy="58" rx="22" ry="22" fill="#fff" stroke="#e8003d" stroke-width="3"/>
+      <ellipse cx="45"  cy="58" rx="12" ry="12" fill="#ffcce5"/>
+      <ellipse cx="175" cy="58" rx="12" ry="12" fill="#ffcce5"/>
+      <!-- Big BOW -->
+      <g transform="translate(150,42)">
+        <!-- left loop -->
+        <ellipse cx="-18" cy="0" rx="20" ry="13" fill="#e8003d" transform="rotate(-20,-18,0)"/>
+        <!-- right loop -->
+        <ellipse cx="18"  cy="0" rx="20" ry="13" fill="#e8003d" transform="rotate(20,18,0)"/>
+        <!-- center -->
+        <circle cx="0" cy="0" r="8" fill="#ff4d8d"/>
+        <!-- shine -->
+        <circle cx="-12" cy="-5" r="4" fill="rgba(255,255,255,0.4)"/>
+        <circle cx="14"  cy="-5" r="4" fill="rgba(255,255,255,0.4)"/>
+      </g>
+      <!-- Eyes -->
+      <ellipse cx="86"  cy="112" rx="9" ry="9" fill="#1a1a1a"/>
+      <ellipse cx="134" cy="112" rx="9" ry="9" fill="#1a1a1a"/>
+      <circle cx="89"   cy="109" r="3" fill="#fff"/>
+      <circle cx="137"  cy="109" r="3" fill="#fff"/>
+      <!-- Nose -->
+      <ellipse cx="110" cy="128" rx="6" ry="4.5" fill="#ff85b3"/>
+      <!-- Whiskers -->
+      <line x1="30"  y1="118" x2="78"  y2="122" stroke="#999" stroke-width="1.8"/>
+      <line x1="30"  y1="128" x2="78"  y2="128" stroke="#999" stroke-width="1.8"/>
+      <line x1="30"  y1="138" x2="78"  y2="134" stroke="#999" stroke-width="1.8"/>
+      <line x1="142" y1="122" x2="190" y2="118" stroke="#999" stroke-width="1.8"/>
+      <line x1="142" y1="128" x2="190" y2="128" stroke="#999" stroke-width="1.8"/>
+      <line x1="142" y1="134" x2="190" y2="138" stroke="#999" stroke-width="1.8"/>
+      <!-- Birthday hat -->
+      <polygon points="110,28 80,88 140,88" fill="#ff4d8d" stroke="#e8003d" stroke-width="2"/>
+      <polygon points="110,28 80,88 140,88" fill="url(#hatch)" opacity="0.3"/>
+      <circle cx="110" cy="26" r="7" fill="#ffe066"/>
+      <!-- hat stripes -->
+      <line x1="95" y1="60" x2="125" y2="60" stroke="#fff" stroke-width="2" opacity="0.5"/>
+      <line x1="90" y1="74" x2="130" y2="74" stroke="#fff" stroke-width="2" opacity="0.5"/>
+      <!-- Cake in hands -->
+      <rect x="66" y="205" width="26" height="20" rx="5" fill="#ffe066" stroke="#e8003d" stroke-width="1.5"/>
+      <ellipse cx="79" cy="205" rx="13" ry="6" fill="#ff85b3" stroke="#e8003d" stroke-width="1.5"/>
+      <line x1="79" y1="199" x2="79" y2="192" stroke="#e8003d" stroke-width="1.5"/>
+      <ellipse cx="79" cy="191" rx="3" ry="4" fill="#ff4d8d"/>
+      <!-- candle flame -->
+      <ellipse cx="79" cy="188" rx="2.5" ry="3.5" fill="#ffe066" opacity="0.9"/>
+      <defs>
+        <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="8" stroke="#fff" stroke-width="2"/>
+        </pattern>
+      </defs>
+    </svg>
+  </div>
+
+  <p class="hero-date">🎀 27 Mayıs · Doğum Günün Kutlu Olsun 🎀</p>
+  <h1 class="hero-title">Mutlu <span>Yıllar</span><br>Meryem! 🎉</h1>
+  <p class="hero-subtitle">Bugün senin için hazırladık bu sürprizi 💖</p>
+  <p class="scroll-hint">▼ AŞAĞI KAY ▼</p>
+</section>
+
+<!-- ===== DİLEK KARTI ===== -->
+<section class="wish-section">
+  <div class="section-inner">
+    <div class="bow-divider">
+      <div class="bow-line"></div>
+      <span style="font-size:1.5rem">🎀</span>
+      <div class="bow-line r"></div>
+    </div>
+    <div class="wish-card">
+      <h2>Sevgili Meryem,</h2>
+      <p>
+        Bugün, hayatımıza renk katan, gülüşüyle ortalığı aydınlatan seni kutlamak için buradayız. 
+        27 Mayıs sana çok yakışıyor — tıpkı baharın en güzel gününe doğmuş gibi. 🌸<br><br>
+        Yaşın başın olsun, hayallerin gerçek olsun, kalbin hep huzurlu kalsın. 
+        Bu yeni yaşın sana mutluluk, sağlık ve sonsuz güzel anılar getirsin.<br><br>
+        <em>İyi ki doğdun, iyi ki varsın!</em> 🎀
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GERİ SAYIM ===== -->
+<section class="countdown-section">
+  <div class="section-inner">
+    <p class="countdown-label">🎀 Doğum Gününe Kalan Süre</p>
+    <div class="countdown-grid">
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-days">--</span>
+        <span class="countdown-unit">Gün</span>
+      </div>
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-hours">--</span>
+        <span class="countdown-unit">Saat</span>
+      </div>
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-mins">--</span>
+        <span class="countdown-unit">Dakika</span>
+      </div>
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-secs">--</span>
+        <span class="countdown-unit">Saniye</span>
+      </div>
+    </div>
+    <p id="cd-msg" style="margin-top:1.2rem; color:var(--hk-red); font-family:'Dancing Script',cursive; font-size:1.5rem; font-weight:700;"></p>
+  </div>
+</section>
+
+<!-- ===== TİMELİNE ===== -->
+<section class="timeline-section">
+  <div class="section-inner">
+    <h2 class="section-title">🎀 Meryem'in Güzel Özellikleri</h2>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-card">
+          <span class="tl-emoji">😄</span>
+          <div class="tl-title">Gülen Yüzü</div>
+          <div class="tl-text">Meryem'in gülüşü odaya girince her şey değişiyor. Güneş gibi ışıltılı!</div>
+        </div>
+      </div>
+
+      <div class="tl-item right">
+        <div class="tl-card">
+          <span class="tl-emoji">💪</span>
+          <div class="tl-title">Güçlü Kalbi</div>
+          <div class="tl-text">Zorluklarla başa çıkarken bile asla pes etmeyen, güçlü ve kararlı biri.</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-card">
+          <span class="tl-emoji">🌺</span>
+          <div class="tl-title">İnce Ruhu</div>
+          <div class="tl-text">Baharın ortasında doğmuş gibi — taze, canlı ve hayat dolu.</div>
+        </div>
+      </div>
+
+      <div class="tl-item right">
+        <div class="tl-card">
+          <span class="tl-emoji">🤝</span>
+          <div class="tl-title">Sadık Dostu</div>
+          <div class="tl-text">Yanında olmak hep güvende hissettiriyor. Gerçek dostluk bu demek!</div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-card">
+          <span class="tl-emoji">🎯</span>
+          <div class="tl-title">Hedeflerine Odaklı</div>
+          <div class="tl-text">Hayallerinin peşinden gitmeyi hiç bırakmayan, ilham veren biri.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== DİLEKLER ===== -->
+<section class="gallery-section">
+  <div class="section-inner">
+    <h2 class="section-title">🎁 Bu Yıl Dilek Listemiz</h2>
+    <div class="wishes-grid">
+      <div class="wish-bubble">
+        <span class="icon">🌟</span>
+        <div class="wish-title">Başarı</div>
+        <div class="wish-text">Her hedefine ulaşman ve hayallerini gerçekleştirmen.</div>
+      </div>
+      <div class="wish-bubble">
+        <span class="icon">❤️</span>
+        <div class="wish-title">Sağlık</div>
+        <div class="wish-text">Sağlıklı, mutlu ve neşeli günlerin olması.</div>
+      </div>
+      <div class="wish-bubble">
+        <span class="icon">🌸</span>
+        <div class="wish-title">Huzur</div>
+        <div class="wish-text">İçinden gelen bir huzur ve dinginlik sana eşlik etsin.</div>
+      </div>
+      <div class="wish-bubble">
+        <span class="icon">✈️</span>
+        <div class="wish-title">Macera</div>
+        <div class="wish-text">Yeni yerleri keşfetmen, heyecan dolu anılar biriktirmen.</div>
+      </div>
+      <div class="wish-bubble">
+        <span class="icon">💛</span>
+        <div class="wish-title">Sevgi</div>
+        <div class="wish-text">Sevgi dolu bir çevre ve kıymetini bilen insanlarla kuşatılman.</div>
+      </div>
+      <div class="wish-bubble">
+        <span class="icon">🎀</span>
+        <div class="wish-title">Neşe</div>
+        <div class="wish-text">Her gün bir şarkı gibi güzel geçsin, dans et, gül!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BUTONLAR ===== -->
+<section class="confetti-btn-section">
+  <div class="section-inner">
+    <h2 class="section-title">🎊 Partiyi Başlat!</h2>
+    <div style="display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;">
+      <button class="big-btn" id="party-btn">🎉 Kutla! 🎉</button>
+    </div>
+    <p class="btn-note">🎀 tıkla ve havai fişeklere bak ✨</p>
+  </div>
+</section>
+
+<!-- ===== ÖZEL NOT ===== -->
+<section style="background:linear-gradient(180deg,#ffcce5,#fff0f6); padding:4rem 2rem; position:relative; z-index:2;">
+  <div style="max-width:640px; margin:0 auto; text-align:center;">
+    <h2 style="font-family:'Dancing Script',cursive; font-size:clamp(2rem,6vw,3rem); color:#e8003d; margin-bottom:2rem; text-shadow:2px 2px 0 rgba(255,77,141,0.2);">💌 Sana Özel Bir Not</h2>
+    <div style="background:#fff; border:3px solid #ff85b3; border-radius:28px; padding:2.5rem 2.5rem 2rem; box-shadow:6px 6px 0 #ff4d8d; position:relative; overflow:hidden; text-align:left;">
+      <!-- köşe süsleri -->
+      <span style="position:absolute;top:1rem;left:1.2rem;font-size:1.4rem;opacity:0.4;">🎀</span>
+      <span style="position:absolute;top:1rem;right:1.2rem;font-size:1.4rem;opacity:0.4;">🎀</span>
+      <span style="position:absolute;bottom:1rem;left:1.2rem;font-size:1.4rem;opacity:0.4;">💗</span>
+      <span style="position:absolute;bottom:1rem;right:1.2rem;font-size:1.4rem;opacity:0.4;">💗</span>
+      <p style="font-family:'Dancing Script',cursive; font-size:clamp(1.1rem,3vw,1.45rem); color:#5a0030; line-height:2; white-space:pre-line; text-align:center;">Sevgili Meryem,
+
+Buraya ne yazmam gerekli bilmiyorum ama seni seviyorum iyi ki doğdun yaşattığın her güzel an için teşekkür ederim..
+
+Seninle tanıştığım için dünyanın en şanslı insanıyım sanırım bu yıl kalbin gibi çok güzel insanlarla tanışır ve sakin bir hayatın olur umarım.
+
+<span style="font-size:1.3em; color:#e8003d; font-weight:700;">MUTLU YILLAR AŞKO DÜNYANIN EN GÜZEL KIZINAA 💗</span>
+
+Gönülden Sevgilerle... ♥</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>🎀 Yapıldı <span>♥</span> ile · Meryem için · 27 Mayıs 🎂 🎀</p>
+</footer>
+
+<script>
+// ===== FLOATIES =====
+const floatSymbols = ['🎀','🎈','🌸','💖','🎊','🍰','🥳','💐','🌺','✨','🎁','🩷'];
+const floatiesEl = document.getElementById('floaties');
+function spawnFloat() {
+  const f = document.createElement('div');
+  f.className = 'floatie';
+  f.textContent = floatSymbols[Math.floor(Math.random()*floatSymbols.length)];
+  f.style.cssText = `left:${Math.random()*100}%;font-size:${1+Math.random()*1.6}rem;animation-duration:${8+Math.random()*10}s;animation-delay:${Math.random()*4}s;`;
+  floatiesEl.appendChild(f);
+  setTimeout(()=>f.remove(), 22000);
+}
+setInterval(spawnFloat, 700);
+for(let i=0;i<10;i++) spawnFloat();
+
+// ===== COUNTDOWN =====
+function updateCountdown() {
+  const now = new Date();
+  let bday = new Date(now.getFullYear(), 4, 27, 0, 0, 0);
+  if (now > bday) bday = new Date(now.getFullYear()+1, 4, 27);
+  const diff = bday - now;
+  if (diff <= 0 || (now.getMonth()===4 && now.getDate()===27)) {
+    ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id=>document.getElementById(id).textContent='0');
+    document.getElementById('cd-msg').textContent = '🎀 BUGÜN DOĞUM GÜNÜN MERYEM! 🎀';
+    return;
+  }
+  const d = Math.floor(diff/86400000);
+  const h = Math.floor((diff%86400000)/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  document.getElementById('cd-days').textContent  = String(d).padStart(2,'0');
+  document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
+  document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
+  if (d===0) document.getElementById('cd-msg').textContent = '🎀 Neredeyse! Yarın doğum günün! 🎀';
+}
+setInterval(updateCountdown,1000); updateCountdown();
+
+// ===== TIMELINE =====
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.3});
+document.querySelectorAll('.tl-item').forEach(el=>obs.observe(el));
+
+// ===== FIREWORKS =====
+const canvas = document.getElementById('fw-canvas');
+const ctx = canvas.getContext('2d');
+function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+
+const particles = [];
+const fwColors = ['#ff4d8d','#e8003d','#ff85b3','#ffe066','#ff99cc','#ff6eb4','#ff1493','#ffffff','#ffb3d1','#ff0066','#ff69b4'];
+
+function heartPath(ctx, x, y, s){
+  ctx.beginPath();
+  ctx.moveTo(x, y + s*0.25);
+  ctx.bezierCurveTo(x - s*0.5, y - s*0.4, x - s, y + s*0.1, x, y + s);
+  ctx.bezierCurveTo(x + s, y + s*0.1, x + s*0.5, y - s*0.4, x, y + s*0.25);
+  ctx.closePath();
+}
+
+class Heart {
+  constructor(x, y, color, big){
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    var angle = Math.random() * Math.PI * 2;
+    var spd = big ? 4 + Math.random()*8 : 2 + Math.random()*5;
+    this.vx = Math.cos(angle) * spd;
+    this.vy = Math.sin(angle) * spd - (big ? 4 : 2);
+    this.alpha = 1;
+    this.decay = 0.013 + Math.random()*0.015;
+    this.size = big ? 5 + Math.random()*8 : 3 + Math.random()*4;
+    this.gravity = 0.15;
+    this.rot = Math.random() * Math.PI * 2;
+    this.rotV = (Math.random()-0.5)*0.12;
+  }
+  tick(){
+    this.vy += this.gravity;
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vx *= 0.98;
+    this.alpha -= this.decay;
+    this.rot += this.rotV;
+  }
+  draw(){
+    if(this.alpha <= 0) return;
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rot);
+    ctx.globalAlpha = Math.max(0, this.alpha);
+    ctx.fillStyle = this.color;
+    heartPath(ctx, 0, -this.size*0.5, this.size);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+function burst(x, y, big){
+  var c1 = fwColors[Math.floor(Math.random()*fwColors.length)];
+  var c2 = fwColors[Math.floor(Math.random()*fwColors.length)];
+  var n = big ? 120 : 60;
+  for(var i=0;i<n;i++){
+    particles.push(new Heart(x, y, i%2===0 ? c1 : c2, big));
+  }
+}
+
+(function loop(){
+  requestAnimationFrame(loop);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for(var i=particles.length-1; i>=0; i--){
+    particles[i].tick();
+    particles[i].draw();
+    if(particles[i].alpha <= 0) particles.splice(i,1);
+  }
+})();
+
+// Sayfa açılınca otomatik
+setTimeout(function(){
+  for(var i=0;i<5;i++){
+    (function(idx){
+      setTimeout(function(){
+        burst(
+          canvas.width*0.1 + Math.random()*canvas.width*0.8,
+          canvas.height*0.1 + Math.random()*canvas.height*0.4,
+          false
+        );
+      }, idx*400);
+    })(i);
+  }
+}, 1200);
+
+setInterval(function(){
+  burst(
+    canvas.width*0.1 + Math.random()*canvas.width*0.8,
+    canvas.height*0.1 + Math.random()*canvas.height*0.45,
+    false
+  );
+}, 3500);
+
+// ===== PARTY BUTTON =====
+document.getElementById('party-btn').addEventListener('click', function(){
+  var btn = this;
+  var W = canvas.width, H = canvas.height;
+  var spots = [
+    [W*0.15, H*0.2],[W*0.5,H*0.15],[W*0.85,H*0.2],
+    [W*0.25, H*0.45],[W*0.75,H*0.4],[W*0.5,H*0.35],
+    [W*0.1, H*0.6],[W*0.9,H*0.55],[W*0.4,H*0.55],[W*0.6,H*0.6]
+  ];
+  spots.forEach(function(pos, i){
+    setTimeout(function(){ burst(pos[0], pos[1], true); }, i*160);
+  });
+  setTimeout(function(){
+    for(var i=0;i<6;i++){
+      (function(idx){
+        setTimeout(function(){
+          burst(W*0.1+Math.random()*W*0.8, H*0.1+Math.random()*H*0.7, true);
+        }, idx*180);
+      })(i);
+    }
+  }, 1800);
+  btn.textContent = '💖🎀💖';
+  setTimeout(function(){ btn.textContent = '🎉 Kutla! 🎉'; }, 3500);
+});
+
+
+</script>
+</body>
+</html>
